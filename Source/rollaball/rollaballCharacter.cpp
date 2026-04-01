@@ -54,6 +54,7 @@ ArollaballCharacter::ArollaballCharacter()
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this,&ArollaballCharacter::OverlapBegin);
+	ItemsCollected = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -134,6 +135,7 @@ void ArollaballCharacter::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 {
 	if (OtherActor->ActorHasTag("Pickup"))
 	{
+		ItemsCollected++;
 		OtherActor->Destroy();
 	}
 }

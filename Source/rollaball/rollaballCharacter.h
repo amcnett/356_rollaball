@@ -47,6 +47,8 @@ class ArollaballCharacter : public ACharacter
 public:
 	ArollaballCharacter();
 	
+	UPROPERTY(BlueprintReadOnly)
+	int32 ItemsCollected;
 
 protected:
 
