@@ -40,6 +40,8 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 	Super::OnPossess(InPawn);
 	ControlledPawn = InPawn;
 	
+	
+	
 	UE_LOG(LogTemp, Warning, TEXT("AI Possessed Pawn: %s"), *InPawn->GetName());
 }
 
