@@ -31,11 +31,17 @@ public:
     
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	UInputAction* JumpAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+    UInputAction* AttackAction;
     
 private:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void StartJump();
 	void StopJump();
+	
+	void StartAttack();
+    void StopAttack();
 	
 };

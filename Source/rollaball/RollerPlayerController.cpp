@@ -28,6 +28,9 @@ void ARollerPlayerController::SetupInputComponent()
 
 		EIC->BindAction(JumpAction, ETriggerEvent::Started, this, &ARollerPlayerController::StartJump);
 		EIC->BindAction(JumpAction, ETriggerEvent::Completed, this, &ARollerPlayerController::StopJump);
+		
+		EIC->BindAction(AttackAction, ETriggerEvent::Started, this, &ARollerPlayerController::StartAttack);
+		EIC->BindAction(AttackAction, ETriggerEvent::Completed, this, &ARollerPlayerController::StopAttack);
 	}
 }
 
@@ -60,5 +63,21 @@ void ARollerPlayerController::StopJump()
 	if (ArollaballCharacter* Char = Cast<ArollaballCharacter>(GetPawn()))
 	{
 		Char->StopJumping();
+	}
+}
+
+void ARollerPlayerController::StartAttack()
+{
+	if (ArollaballCharacter* Char = Cast<ArollaballCharacter>(GetPawn()))
+	{
+		Char->Attack();
+	}
+}
+
+void ARollerPlayerController::StopAttack()
+{
+	if (ArollaballCharacter* Char = Cast<ArollaballCharacter>(GetPawn()))
+	{
+		Char->StopAttack();
 	}
 }

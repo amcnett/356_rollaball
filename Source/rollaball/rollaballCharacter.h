@@ -50,6 +50,9 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	int32 ItemsCollected;
 	
+	UPROPERTY(BlueprintReadWrite)
+	bool Attacking;
+	
 	UFUNCTION(BlueprintCallable)
 	void AttachWeapon(AWeapon* Weapon);
 
@@ -60,6 +63,12 @@ public:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+	
+	/** Called for looking input */
+	UFUNCTION(BlueprintCallable)
+	void Attack();
+	UFUNCTION(BlueprintCallable)
+	void StopAttack();
 			
 
 protected:

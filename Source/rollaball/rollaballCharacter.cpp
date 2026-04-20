@@ -56,6 +56,7 @@ ArollaballCharacter::ArollaballCharacter()
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this,&ArollaballCharacter::OverlapBegin);
 	ItemsCollected = 0;
+	Attacking = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -144,4 +145,14 @@ void ArollaballCharacter::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 void ArollaballCharacter::AttachWeapon(AWeapon* Weapon)
 {
 	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("right_socket"));
+}
+
+void ArollaballCharacter::Attack()
+{
+	Attacking = true;
+}
+
+void ArollaballCharacter::StopAttack()
+{
+	Attacking = false;
 }
