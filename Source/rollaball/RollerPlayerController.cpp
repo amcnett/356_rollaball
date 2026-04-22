@@ -70,7 +70,11 @@ void ARollerPlayerController::StartAttack()
 {
 	if (ArollaballCharacter* Char = Cast<ArollaballCharacter>(GetPawn()))
 	{
-		Char->Attack();
+		if (Char->IsLocallyControlled()) //controlled by client
+		{
+			Char->Attack(); //client attack
+			Char->ServerAttack(); //tell server to do the same thing
+		}
 	}
 }
 
@@ -78,6 +82,6 @@ void ARollerPlayerController::StopAttack()
 {
 	if (ArollaballCharacter* Char = Cast<ArollaballCharacter>(GetPawn()))
 	{
-		Char->StopAttack();
+		//Char->StopAttack();
 	}
 }

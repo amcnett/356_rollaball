@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Weapon.h"
+#include "Components/BoxComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -19,6 +20,7 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 ArollaballCharacter::ArollaballCharacter()
 {
+	bReplicates = true;
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -145,14 +147,31 @@ void ArollaballCharacter::OverlapBegin(UPrimitiveComponent* OverlappedComponent,
 void ArollaballCharacter::AttachWeapon(AWeapon* Weapon)
 {
 	Weapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetIncludingScale, FName("right_socket"));
+	EquippedWeapon = Weapon;
+	HitBox = Cast<UBoxComponent>(EquippedWeapon->GetDefaultSubobjectByName(TEXT("HitBox")));
 }
 
 void ArollaballCharacter::Attack()
 {
-	Attacking = true;
+	if (EquippedWeapon && HitBox)
+	{   // turns on weapon to do damage (collision area)
+		HitBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		HitBox->SetGenerateOverlapEvents(true);
+		Attacking = true;
+	}
 }
 
 void ArollaballCharacter::StopAttack()
 {
-	Attacking = false;
+	if (EquippedWeapon && HitBox)
+	{   // turns on weapon to do damage (collision area)
+		HitBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HitBox->SetGenerateOverlapEvents(false);
+		Attacking = false;
+	}
+}
+
+void ArollaballCharacter::ServerAttack_Implementation()
+{
+	Attack(); // call player's attack but on the server side (server can see the attack)
 }

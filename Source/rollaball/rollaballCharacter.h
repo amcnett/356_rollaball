@@ -7,6 +7,8 @@
 #include "Logging/LogMacros.h"
 #include "rollaballCharacter.generated.h"
 
+class UBoxComponent;
+class AWeapon;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
@@ -53,6 +55,12 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	bool Attacking;
 	
+	UPROPERTY(BlueprintReadOnly)
+	AWeapon* EquippedWeapon;
+	
+	UPROPERTY(BlueprintReadOnly)
+	UBoxComponent* HitBox;
+	
 	UFUNCTION(BlueprintCallable)
 	void AttachWeapon(AWeapon* Weapon);
 
@@ -70,7 +78,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StopAttack();
 			
-
+	UFUNCTION(Server, Reliable)
+	void ServerAttack();
+	
 protected:
 
 	//virtual void NotifyControllerChanged() override;
